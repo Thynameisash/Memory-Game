@@ -28,6 +28,7 @@ class _MyWordState extends State<MyWord> {
           Future.delayed(
             const Duration(seconds: 1),
             () {
+              widget.allwords.shuffle();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -43,7 +44,9 @@ class _MyWordState extends State<MyWord> {
         setState(
           () {
             currWord = usersublist[idx];
-            idx++;
+            if (idx != usersublist.length) {
+              idx++;
+            }
           },
         );
       },
