@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "77200694341",
+    "project_id": "my-wordmemory-game",
+    "storage_bucket": "my-wordmemory-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77200694341:android:d73e0911c46e609e6a572c",
+        "android_client_info": {
+          "package_name": "com.example.memorygame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "77200694341-1c3lkrcippr1ac6augbkguikmqsappvb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt1-fAy-W7d-iBKVJ9KpfnVrimvjJSnII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "77200694341-1c3lkrcippr1ac6augbkguikmqsappvb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
