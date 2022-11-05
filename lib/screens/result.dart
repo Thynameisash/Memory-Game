@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:memorygame/screens/score.dart';
@@ -10,9 +8,11 @@ class UserResult extends StatefulWidget {
     super.key,
     required this.usersublist,
     required this.allwords,
+    required this.name,
   });
   final List<String> usersublist;
   final List<String> allwords;
+  final String name;
   @override
   State<UserResult> createState() => _UserResultState();
 }
@@ -27,31 +27,39 @@ class _UserResultState extends State<UserResult> {
   void initState() {
     super.initState();
     for (String word in widget.allwords) {
+      //Initialize map with word:F
+      // 0 -> Word not clicked
+      // 1 -> Word tapped and correct
+      // -1 -> Word tapped but incorrect
       wordinlist.putIfAbsent(word, () => 0);
     }
-    // print(wordinlist);
   }
 
+//Check tapped word is correct or not (10 words/clicks only)
   bool iscorrect(String word) {
     if (--clicks <= 0) {
       Future.delayed(
-        const Duration(seconds: 3),
+        const Duration(milliseconds: 600),
         () {
           widget.allwords.shuffle();
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => UserScore(userscoremap: wordinlist,)),
+            MaterialPageRoute(
+              builder: (context) => UserScore(
+                userscoremap: wordinlist,
+                name: widget.name,
+              ),
+            ),
           );
         },
       );
     }
-    // clicks--;
-    print(clicks);
+    // If correct , change value from 0 -> 1
     if (widget.usersublist.contains(word)) {
       wordinlist[word] = 1;
-      // print(wordinlist);
       return true;
     }
+    // If incorrect , change value from 0 -> -1
     wordinlist[word] = -1;
     return false;
   }

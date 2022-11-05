@@ -47,3 +47,4 @@ ios/
 linux/
 macos/
 windows/
+node_modules/

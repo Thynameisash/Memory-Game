@@ -2,26 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:memorygame/screens/word.dart';
-
 import 'package:memorygame/utils/colors.dart';
-
 import '../utils/apiservice.dart';
 
 class UserInfo extends StatefulWidget {
-  const UserInfo({super.key});
-
+  const UserInfo({super.key, required this.timedelay});
+  final int timedelay;
   @override
   State<UserInfo> createState() => _UserInfoState();
 }
 
 class _UserInfoState extends State<UserInfo> {
   TextEditingController namectr = TextEditingController();
-  int userscore = 69;
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
   List<String> allwords = [];
+
   @override
   void initState() {
     super.initState();
+    //prefetch all 24 words to a list, to pass to next screen.
     apicall();
   }
 
@@ -29,19 +27,10 @@ class _UserInfoState extends State<UserInfo> {
     allwords = await ApiService.callApi();
   }
 
-  addinfo() {
-    return users
-        .add({"name": namectr.text, "score": userscore})
-        .then(
-          (value) => print("Info Added:\n${value}"),
-        )
-        .catchError(
-          (error) => print("Failed to add user: $error"),
-        );
-  }
-
   @override
   Widget build(BuildContext context) {
+    // var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -58,6 +47,15 @@ class _UserInfoState extends State<UserInfo> {
       backgroundColor: ConstColors.primaryc,
       body: Column(
         children: [
+          //<hr> below Appbar
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Container(
+              height: 2.0,
+              width: width,
+              color: ConstColors.secondarytext,
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 200),
             child: Container(
@@ -93,7 +91,8 @@ class _UserInfoState extends State<UserInfo> {
                     MaterialPageRoute(
                       builder: (context) => MyWord(
                         allwords: allwords,
-                        timedelay: 1,
+                        timedelay: widget.timedelay,
+                        name: namectr.text,
                       ),
                     ),
                   );

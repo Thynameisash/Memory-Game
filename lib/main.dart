@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:memorygame/screens/info.dart';
 import 'package:memorygame/utils/colors.dart';
-import 'package:memorygame/screens/word.dart';
-// import 'package:memorygame/wordsResponse.dart';
-
 import 'firebase_options.dart';
 import 'utils/apiservice.dart';
 
@@ -82,9 +79,20 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return Center(
       child: Column(
         children: [
+          //HR below Appbar
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Container(
+              height: 2.0,
+              width: width,
+              color: ConstColors.secondarytext,
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 180),
             child: Text(
@@ -93,160 +101,102 @@ class _MainScreenState extends State<MainScreen> {
                   fontSize: 30, color: ConstColors.primarytext),
             ),
           ),
+
+          //Easy BTN
           Padding(
             padding: const EdgeInsets.only(top: 30),
             child: Container(
               height: 50,
               margin: const EdgeInsets.all(10),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserInfo(),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0),
-                  ),
-                  padding: const EdgeInsets.all(0.0),
-                ),
-                child: Ink(
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        ConstColors.primarytext,
-                        Color.fromARGB(255, 255, 100, 100)
-                      ],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: Container(
-                    constraints:
-                        const BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Easy",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w900),
-                    ),
-                  ),
-                ),
+              child: const GradientBtn(
+                timedelay: 2000,
+                difficulty: "Easy",
               ),
             ),
           ),
+
+          //Medium BTN
           Padding(
-            padding: const EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.only(top: 30),
             child: Container(
-              height: 50.0,
+              height: 50,
               margin: const EdgeInsets.all(10),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyWord(
-                        allwords: allwords,
-                        timedelay: 2,
-                      ),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0),
-                  ),
-                  padding: const EdgeInsets.all(0.0),
-                ),
-                child: Ink(
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        ConstColors.primarytext,
-                        Color.fromARGB(255, 255, 100, 100)
-                      ],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: Container(
-                    constraints:
-                        const BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Medium",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w900),
-                    ),
-                  ),
-                ),
+              child: const GradientBtn(
+                timedelay: 1000,
+                difficulty: "Medium",
               ),
             ),
           ),
+
+          //Hard BTN
           Padding(
-            padding: const EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.only(top: 30),
             child: Container(
-              height: 50.0,
+              height: 50,
               margin: const EdgeInsets.all(10),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyWord(
-                        allwords: allwords,
-                        timedelay: 1,
-                      ),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0),
-                  ),
-                  padding: const EdgeInsets.all(0.0),
-                ),
-                child: Ink(
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        ConstColors.primarytext,
-                        Color.fromARGB(255, 255, 100, 100)
-                      ],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: Container(
-                    constraints:
-                        const BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Hard",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w900),
-                    ),
-                  ),
-                ),
+              child: const GradientBtn(
+                timedelay: 500,
+                difficulty: "Hard",
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class GradientBtn extends StatefulWidget {
+  const GradientBtn({
+    Key? key,
+    required this.timedelay,
+    required this.difficulty,
+  }) : super(key: key);
+  final int timedelay;
+  final String difficulty;
+  @override
+  State<GradientBtn> createState() => _GradientBtnState();
+}
+
+class _GradientBtnState extends State<GradientBtn> {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserInfo(
+              timedelay: widget.timedelay,
+            ),
+          ),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(80.0),
+        ),
+        padding: const EdgeInsets.all(0.0),
+      ),
+      child: Ink(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [ConstColors.primarytext, ConstColors.gradientcolor],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
+          alignment: Alignment.center,
+          child: Text(
+            widget.difficulty,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.lato(
+                fontSize: 20, color: Colors.black, fontWeight: FontWeight.w900),
+          ),
+        ),
       ),
     );
   }
