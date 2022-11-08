@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,10 +12,12 @@ class MyWord extends StatefulWidget {
       {super.key,
       required this.allwords,
       required this.timedelay,
-      required this.name});
+      required this.name,
+      required this.usersublist});
   final String name;
   final List<String> allwords;
   final int timedelay;
+  final List<String> usersublist;
   @override
   State<MyWord> createState() => _MyWordState();
 }
@@ -26,14 +29,11 @@ class _MyWordState extends State<MyWord> {
   @override
   void initState() {
     super.initState();
-    // Sublist = List of 10 words from all the 24 words
-    List<String> usersublist = widget.allwords.sublist(0, 10);
-
     //Timer to display each word after a delay
     Timer.periodic(
       Duration(milliseconds: widget.timedelay),
       (timer) {
-        if (idx == usersublist.length) {
+        if (idx == widget.usersublist.length) {
           timer.cancel();
           //Another timer for the last word.
           Future.delayed(
@@ -44,7 +44,7 @@ class _MyWordState extends State<MyWord> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => UserResult(
-                    usersublist: usersublist,
+                    usersublist: widget.usersublist,
                     allwords: widget.allwords,
                     name: widget.name,
                   ),
@@ -56,8 +56,8 @@ class _MyWordState extends State<MyWord> {
         setState(
           () {
             isloading = false;
-            currWord = usersublist[idx];
-            if (idx != usersublist.length) {
+            currWord = widget.usersublist[idx];
+            if (idx != widget.usersublist.length) {
               idx++;
             }
           },

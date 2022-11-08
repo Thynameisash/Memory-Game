@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +17,7 @@ class UserInfo extends StatefulWidget {
 class _UserInfoState extends State<UserInfo> {
   TextEditingController namectr = TextEditingController();
   List<String> allwords = [];
+  List<String> usersublist = [];
 
   @override
   void initState() {
@@ -25,6 +28,39 @@ class _UserInfoState extends State<UserInfo> {
 
   apicall() async {
     allwords = await ApiService.callApi();
+    wordlogic();
+    //Special case if usersublist doesnt have 10 words
+    if (usersublist.length < 10) {
+      print("Running Spl case");
+      int count = 10 - usersublist.length;
+      Set<int> wordidx = {};
+      while (count > 0) {
+        int randomwordidx = Random().nextInt(24);
+        if (!wordidx.contains(randomwordidx)) {
+          usersublist.add(allwords[randomwordidx]);
+          count--;
+        }
+      }
+    }
+  }
+
+  wordlogic() {
+    // If medium level - Only add words greater than 3 length
+    if (widget.timedelay == 1000) {
+      for (String i in allwords) {
+        if (i.length > 3 && usersublist.length != 10) {
+          usersublist.add(i);
+        }
+      }
+    }
+    // If hard level - Only add words greater than 5 length
+    if (widget.timedelay == 500) {
+      for (String i in allwords) {
+        if (i.length > 5 && usersublist.length != 10) {
+          usersublist.add(i);
+        }
+      }
+    }
   }
 
   @override
@@ -90,6 +126,7 @@ class _UserInfoState extends State<UserInfo> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => MyWord(
+                        usersublist: usersublist,
                         allwords: allwords,
                         timedelay: widget.timedelay,
                         name: namectr.text,
