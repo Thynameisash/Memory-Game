@@ -31,7 +31,7 @@ class _UserInfoState extends State<UserInfo> {
     wordlogic();
     //Special case if usersublist doesnt have 10 words
     if (usersublist.length < 10) {
-      print("Running Spl case");
+      // print("Running Spl case");
       int count = 10 - usersublist.length;
       Set<int> wordidx = {};
       while (count > 0) {
