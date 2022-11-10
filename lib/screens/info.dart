@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:memorygame/screens/word.dart';
@@ -10,6 +8,7 @@ import '../utils/apiservice.dart';
 class UserInfo extends StatefulWidget {
   const UserInfo({super.key, required this.timedelay});
   final int timedelay;
+
   @override
   State<UserInfo> createState() => _UserInfoState();
 }

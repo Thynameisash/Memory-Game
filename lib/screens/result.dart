@@ -27,7 +27,7 @@ class _UserResultState extends State<UserResult> {
   void initState() {
     super.initState();
     for (String word in widget.allwords) {
-      //Initialize map with word:F
+      //Initialize map with word:
       // 0 -> Word not clicked
       // 1 -> Word tapped and correct
       // -1 -> Word tapped but incorrect
