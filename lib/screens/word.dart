@@ -33,7 +33,7 @@ class _MyWordState extends State<MyWord> {
     Timer.periodic(
       Duration(milliseconds: widget.timedelay),
       (timer) {
-        if (idx == widget.usersublist.length) {
+        if (idx == widget.usersublist.length-1) {
           timer.cancel();
           //Another timer for the last word.
           Future.delayed(
